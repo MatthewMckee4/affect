@@ -3,7 +3,7 @@ build-backend = "setuptools.build_meta"
 requires = ["setuptools>=61", "uv", "build", "wheel"]
 
 [project]
-dependencies = ["pydantic-settings>=2.8.0", "typer>=0.15.1"]
+dependencies = ["pydantic>=2.10.6", "pydantic-settings>=2.8.0", "typer>=0.15.1"]
 description = "Build robust python applications"
 name = "affect"
 readme = "README.md"
@@ -17,6 +17,18 @@ dev = [
   "pre-commit>=4.1.0",
   "ruff>=0.9.7",
   "tbump>=6.11.0"
+]
+docs = [
+  "mkdocs",
+  "mkdocs-jupyter>=0.24",
+  "mkdocstrings[python]",
+  "mkdocs-material"
+]
+test = [
+  "pytest-cov>=6.0.0",
+  "pytest-randomly>=3.16.0",
+  "pytest-xdist>=3.6.0",
+  "pytest>=8.3.0"
 ]
 
 [project.scripts]
