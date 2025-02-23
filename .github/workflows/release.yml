@@ -13,6 +13,8 @@ jobs:
     permissions:
       id-token: write
     steps:
+    - name: Build package
+      run: make build
     - name: Publish package distributions to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1.12
 
