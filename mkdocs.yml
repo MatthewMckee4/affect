@@ -20,35 +20,5 @@ theme:
   icon:
     repo: fontawesome/brands/github
 
-markdown_extensions:
-- admonition
-- pymdownx.superfences
-- pymdownx.tasklist
-- pymdownx.tabbed
-- pymdownx.emoji
-- pymdownx.snippets:
-    check_paths: true
-
 plugins:
 - search
-- mkdocs-jupyter:
-    include_source: true
-    include_requirejs: true
-    execute: true
-    allow_errors: false
-    kernel_name: python3
-- mkdocstrings:
-    handlers:
-      python:
-        options:
-          docstring_style: google
-          show_source: true
-          separate_signature: true
-          show_signature_annotations: true
-          signature_crossrefs: true
-          annotations_path: source
-          members_order: source
-          show_if_no_docstring: true
-          show_root_full_path: true
-          show_signature: true
-          show_root_heading: true
