@@ -8,7 +8,7 @@ from rich.table import Table
 
 from affect.settings import settings
 
-__version__ = "0.1.4"
+__version__ = "0.1.5"
 
 plugins: list[str] = []
 
