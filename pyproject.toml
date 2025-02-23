@@ -1,3 +1,7 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools>=61", "uv", "build", "wheel"]
+
 [project]
 dependencies = ["pydantic-settings>=2.8.0", "typer>=0.15.1"]
 description = "Build robust python applications"
@@ -7,7 +11,13 @@ requires-python = ">=3.11"
 version = "0.0.0"
 
 [project.optional-dependencies]
-dev = ["mypy>=1.15.0", "pre-commit>=4.1.0", "ruff>=0.9.7", "tbump>=6.11.0"]
+dev = [
+  "build>=1.2.2.post1",
+  "mypy>=1.15.0",
+  "pre-commit>=4.1.0",
+  "ruff>=0.9.7",
+  "tbump>=6.11.0"
+]
 
 [project.scripts]
 affect = "affect.cli:app"
@@ -25,6 +35,14 @@ fix = true
 target-version = "py311"
 
 [tool.ruff.lint]
+ignore = ["S101"]
+per-file-ignores = {"tests/*.py" = [
+  "D",
+  "INP001"
+], "docs/*.py" = [
+  "D",
+  "INP001"
+]}
 select = ["ALL"]
 
 [tool.ruff.lint.pydocstyle]
