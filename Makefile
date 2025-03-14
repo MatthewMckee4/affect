@@ -7,7 +7,7 @@ test:
 	uv run pytest -s -n logical
 
 cov:
-	uv run pytest -s -n logical --cov=affect --cov=tests --cov-report=term-missing:skip-covered
+	uv run pytest -s -n logical --cov=affect --cov=tests --cov-report=term-missing:skip-covered --cov-branch --cov-report=xml
 
 pre-commit:
 	uv run pre-commit run --all-files
@@ -36,5 +36,6 @@ clean:
 	find . -name "build" | xargs rm -rf
 	find . -name "builds" | xargs rm -rf
 	find . -name "dist" -not -path "*node_modules*" | xargs rm -rf
+	find . -name "*.egg-info" | xargs rm -rf
 
 .PHONY: dev test cov pre-commit build clean docs

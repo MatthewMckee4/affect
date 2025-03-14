@@ -3,7 +3,7 @@ build-backend = "setuptools.build_meta"
 requires = ["setuptools>=61", "uv", "build", "wheel"]
 
 [project]
-dependencies = ["pydantic>=2.10.6", "pydantic-settings>=2.8.0", "typer>=0.15.1"]
+dependencies = ["pydantic>=2.10.6", "pydantic-settings>=2.8.0"]
 description = "Build robust python applications"
 name = "affect"
 readme = "README.md"
@@ -28,15 +28,27 @@ test = [
   "pytest-cov>=6.0.0",
   "pytest-randomly>=3.16.0",
   "pytest-xdist>=3.6.0",
-  "pytest>=8.3.0"
+  "pytest>=8.3.5"
 ]
-
-[project.scripts]
-affect = "affect.cli:app"
 
 [project.urls]
 Issues = "https://github.com/MatthewMckee4/affect/issues"
 Repository = "https://github.com/MatthewMckee4/affect"
+
+[tool.coverage.report]
+exclude_also = [
+  "if self\\.debug",
+  "raise AssertionError",
+  "raise NotImplementedError",
+  "if 0:",
+  "if __name__ == .__main__.:",
+  "@(abc\\.)?abstractmethod",
+  "if TYPE_CHECKING:"
+]
+ignore_errors = true
+
+[tool.coverage.run]
+branch = true
 
 [tool.mypy]
 python_version = "3.11"
@@ -47,10 +59,11 @@ fix = true
 target-version = "py311"
 
 [tool.ruff.lint]
-ignore = ["S101"]
+ignore = ["S101", "ANN401", "T201"]
 per-file-ignores = {"tests/*.py" = [
   "D",
-  "INP001"
+  "INP001",
+  "PLR2004"
 ], "docs/*.py" = [
   "D",
   "INP001"

@@ -2,7 +2,10 @@
 
 from typing import TypeVar
 
-__all__ = ["F", "S"]
+__all__ = ["FailureT", "O", "SuccessT", "T", "U"]
 
-S = TypeVar("S")
-F = TypeVar("F")
+T = TypeVar("T")
+SuccessT = TypeVar("SuccessT")
+FailureT = TypeVar("FailureT")
+U = TypeVar("U")
+O = TypeVar("O")  # noqa: E741
