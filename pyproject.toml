@@ -43,7 +43,8 @@ exclude_also = [
   "if 0:",
   "if __name__ == .__main__.:",
   "@(abc\\.)?abstractmethod",
-  "if TYPE_CHECKING:"
+  "if TYPE_CHECKING:",
+  "@overload"
 ]
 ignore_errors = true
 
@@ -59,7 +60,7 @@ fix = true
 target-version = "py311"
 
 [tool.ruff.lint]
-ignore = ["S101", "ANN401", "T201"]
+ignore = ["S101", "ANN401", "T201", "TC006"]
 per-file-ignores = {"tests/*.py" = [
   "D",
   "INP001",

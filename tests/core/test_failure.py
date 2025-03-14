@@ -103,7 +103,7 @@ def test_failure_expect_err() -> None:
 
 def test_failure_unwrap_err() -> None:
     failure_result = Failure(value="Test Error")
-    assert failure_result.unwrap_err("This should return the error") == "Test Error"
+    assert failure_result.unwrap_err() == "Test Error"
 
 
 def test_failure_and() -> None:

@@ -111,8 +111,8 @@ def test_success_expect_err() -> None:
 
 def test_success_unwrap_err() -> None:
     success_result = Success(value="Test Value")
-    with pytest.raises(PanicError, match="This should return the error"):
-        success_result.unwrap_err("This should return the error")
+    with pytest.raises(PanicError, match="Test Value"):
+        success_result.unwrap_err()
 
 
 def test_success_and() -> None:

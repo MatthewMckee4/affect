@@ -117,9 +117,9 @@ class Success(_ResultBase[SuccessT]):
         msg = f"{message}: {self.value}"
         raise PanicError(msg)
 
-    def unwrap_err(self, message: str, /) -> NoReturn:
+    def unwrap_err(self) -> NoReturn:
         """Unwrap the result."""
-        raise PanicError(message)
+        raise PanicError(self.value)
 
     def and_(self, _res: Result[U, O], /) -> Result[U, O]:
         """Returns res if the result is Ok, otherwise returns the Err value of self."""
@@ -202,7 +202,7 @@ class Failure(_ResultBase[FailureT]):
         """
         return self.value
 
-    def unwrap_err(self, _message: str, /) -> FailureT:
+    def unwrap_err(self) -> FailureT:
         """Unwrap the result."""
         return self.value
 
@@ -222,3 +222,13 @@ def is_ok(result: Result[SuccessT, FailureT]) -> TypeIs[Success[SuccessT]]:
 def is_err(result: Result[SuccessT, FailureT]) -> TypeIs[Failure[FailureT]]:
     """Check if the result is an error."""
     return isinstance(result, Failure)
+
+
+def is_success(result: Result[SuccessT, FailureT]) -> TypeIs[Success[SuccessT]]:
+    """Check if the result is a success."""
+    return is_ok(result)
+
+
+def is_failure(result: Result[SuccessT, FailureT]) -> TypeIs[Failure[FailureT]]:
+    """Check if the result is a failure."""
+    return is_err(result)
