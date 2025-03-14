@@ -1,6 +1,9 @@
 from typing import Any
 
-from affect import Result, Success
+import pytest
+
+from affect import Failure, Result, Success
+from affect.exceptions import PanicError
 
 
 def test_success_is_ok() -> None:
@@ -88,3 +91,37 @@ def test_success_iter_method() -> None:
     success_result = Success(value="Test Value")
     values = list(success_result)
     assert values == ["Test Value"]
+
+
+def test_success_expect() -> None:
+    success_result = Success(value="Test Value")
+    assert success_result.expect("This should return the value") == "Test Value"
+
+
+def test_success_unwrap() -> None:
+    success_result = Success(value="Test Value")
+    assert success_result.unwrap() == "Test Value"
+
+
+def test_success_expect_err() -> None:
+    success_result = Success(value="Test Value")
+    with pytest.raises(PanicError, match="This should panic: Test Value"):
+        success_result.expect_err("This should panic")
+
+
+def test_success_unwrap_err() -> None:
+    success_result = Success(value="Test Value")
+    with pytest.raises(PanicError, match="This should return the error"):
+        success_result.unwrap_err("This should return the error")
+
+
+def test_success_and() -> None:
+    success_result = Success(value="Test Value")
+    other_result = Success(value="Other Value")
+    assert success_result.and_(other_result) == other_result
+
+
+def test_success_and_failure() -> None:
+    success_result = Success(value="Test Value")
+    failure_result = Failure(value="Test Error")
+    assert success_result.and_(failure_result) == failure_result
