@@ -9,13 +9,14 @@ from affect.core._core import (
     is_ok,
     is_success,
 )
-from affect.core._extra import as_result
+from affect.core._decorators import as_async_result, as_result
 from affect.core._helpers import safe_print
 
 __all__ = [
     "Failure",
     "Result",
     "Success",
+    "as_async_result",
     "as_result",
     "is_err",
     "is_failure",

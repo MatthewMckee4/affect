@@ -32,6 +32,7 @@ repos:
     additional_dependencies:
     - pydantic-settings
     - typer
+    - pytest
 
 - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
   rev: v2.14.0
