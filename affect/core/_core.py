@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, Any, Generic, Literal, Self, TypeAlias
+from typing import TYPE_CHECKING, Any, Generic, Literal, NoReturn, Self, TypeAlias
 
 from pydantic.dataclasses import dataclass
 from typing_extensions import TypeIs
 
+from affect.exceptions import PanicError
 from affect.typings import FailureT, O, SuccessT, T, U
 
 if TYPE_CHECKING:
@@ -33,38 +34,6 @@ class _ResultBase(Generic[T], ABC):
 
     def is_err_and(self, predicate: Callable[[T], bool]) -> bool:
         return self.is_err() and predicate(self.value)
-
-    @abstractmethod
-    def ok(self) -> T | None:
-        """Get the value if it's ok, otherwise return None."""
-
-    @abstractmethod
-    def err(self) -> T | None:
-        """Get the error if it's an error, otherwise return None."""
-
-    @abstractmethod
-    def map(self, func: Callable[[T], SuccessT], /) -> Result[SuccessT, T]:
-        """Map the result to a new type."""
-
-    @abstractmethod
-    def map_or(self, default: U, func: Callable[[T], U], /) -> U:
-        """Map the result to a new type."""
-
-    @abstractmethod
-    def map_or_else(self, default: Callable[[T], U], func: Callable[[T], U], /) -> U:
-        """Map the result to a new type."""
-
-    @abstractmethod
-    def map_err(self, func: Callable[[T], SuccessT], /) -> Result[T, SuccessT]:
-        """Map the result to a new type."""
-
-    @abstractmethod
-    def inspect(self, func: Callable[[T], Any], /) -> Self:
-        """Inspect the result."""
-
-    @abstractmethod
-    def inspect_err(self, func: Callable[[T], Any], /) -> Self:
-        """Inspect the result."""
 
     @abstractmethod
     def iter(self) -> Iterator[T | None]:
@@ -132,6 +101,30 @@ class Success(_ResultBase[SuccessT]):
         """Iterate over the result."""
         yield self.value
 
+    def expect(self, _message: str, /) -> SuccessT:
+        """Expect the result."""
+        return self.value
+
+    def unwrap(self) -> SuccessT:
+        """Unwrap the result."""
+        return self.value
+
+    def expect_err(self, message: str, /) -> NoReturn:
+        """Expect the result, panicking if it's an error.
+
+        This method is generally not recommended, as it can lead to panics.
+        """
+        msg = f"{message}: {self.value}"
+        raise PanicError(msg)
+
+    def unwrap_err(self) -> NoReturn:
+        """Unwrap the result."""
+        raise PanicError(self.value)
+
+    def and_(self, _res: Result[U, O], /) -> Result[U, O]:
+        """Returns res if the result is Ok, otherwise returns the Err value of self."""
+        return _res
+
 
 class Failure(_ResultBase[FailureT]):
     """A failed result."""
@@ -186,6 +179,37 @@ class Failure(_ResultBase[FailureT]):
         """Iterate over the result."""
         yield None
 
+    def expect(self, message: str, /) -> NoReturn:
+        """Expect the result, panicking if it's an error.
+
+        This method is generally not recommended, as it can lead to panics.
+        """
+        msg = f"{message}: {self.err()}"
+        raise PanicError(msg)
+
+    def unwrap(self) -> NoReturn:
+        """Unwrap the result, panicking if it's an error.
+
+        This method is generally not recommended, as it can lead to panics.
+        """
+        msg = f"Unwrapping a failure: {self.err()}"
+        raise PanicError(msg)
+
+    def expect_err(self, _message: str, /) -> FailureT:
+        """Expect the result, panicking if it's an error.
+
+        This method is generally not recommended, as it can lead to panics.
+        """
+        return self.value
+
+    def unwrap_err(self) -> FailureT:
+        """Unwrap the result."""
+        return self.value
+
+    def and_(self, _res: Result[U, O], /) -> Self:
+        """Returns res if the result is Ok, otherwise returns the Err value of self."""
+        return self
+
 
 Result: TypeAlias = Success[SuccessT] | Failure[FailureT]
 
@@ -198,3 +222,13 @@ def is_ok(result: Result[SuccessT, FailureT]) -> TypeIs[Success[SuccessT]]:
 def is_err(result: Result[SuccessT, FailureT]) -> TypeIs[Failure[FailureT]]:
     """Check if the result is an error."""
     return isinstance(result, Failure)
+
+
+def is_success(result: Result[SuccessT, FailureT]) -> TypeIs[Success[SuccessT]]:
+    """Check if the result is a success."""
+    return is_ok(result)
+
+
+def is_failure(result: Result[SuccessT, FailureT]) -> TypeIs[Failure[FailureT]]:
+    """Check if the result is a failure."""
+    return is_err(result)

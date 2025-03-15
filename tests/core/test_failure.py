@@ -1,4 +1,7 @@
-from affect import Failure, Result
+import pytest
+
+from affect import Failure, Result, Success
+from affect.exceptions import PanicError
 
 
 def test_failure_is_ok() -> None:
@@ -79,3 +82,37 @@ def test_failure_iter_method() -> None:
     failure_result = Failure(value="Test Error")
     values = list(failure_result)
     assert values == [None]
+
+
+def test_failure_expect() -> None:
+    failure_result = Failure(value="Test Error")
+    with pytest.raises(PanicError, match="This should panic: Test Error"):
+        failure_result.expect("This should panic")
+
+
+def test_failure_unwrap() -> None:
+    failure_result = Failure(value="Test Error")
+    with pytest.raises(PanicError, match="Unwrapping a failure: Test Error"):
+        failure_result.unwrap()
+
+
+def test_failure_expect_err() -> None:
+    failure_result = Failure(value="Test Error")
+    assert failure_result.expect_err("This should return the error") == "Test Error"
+
+
+def test_failure_unwrap_err() -> None:
+    failure_result = Failure(value="Test Error")
+    assert failure_result.unwrap_err() == "Test Error"
+
+
+def test_failure_and() -> None:
+    failure_result = Failure(value="Test Error")
+    other_result = Success(value="Other Value")
+    assert failure_result.and_(other_result) == failure_result
+
+
+def test_failure_and_failure() -> None:
+    failure_result = Failure(value="Test Error")
+    other_failure_result = Failure(value="Another Error")
+    assert failure_result.and_(other_failure_result) == failure_result
