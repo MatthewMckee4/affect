@@ -3,7 +3,15 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, Any, Generic, Literal, NoReturn, Self, TypeAlias
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Generic,
+    Literal,
+    NoReturn,
+    Self,
+    TypeAlias,
+)
 
 from pydantic.dataclasses import dataclass
 from typing_extensions import TypeIs
@@ -71,7 +79,7 @@ class Success(_ResultBase[SuccessT]):
         """Map the result to a new type."""
         return Success(value=func(self.value))
 
-    def map_or(self, _default: Any, func: Callable[[SuccessT], U], /) -> U:
+    def map_or(self, _default: U, func: Callable[[SuccessT], U], /) -> U:
         """Map the result to a new type."""
         return func(self.value)
 

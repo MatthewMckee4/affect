@@ -8,10 +8,11 @@ def divide(a: float, b: float) -> float:
     return a / b
 
 
-def test_divide_success() -> None:
-    result = divide(10, 2)
+@pytest.mark.parametrize(("a", "b"), [(10, 2), (20, 10)])
+def test_divide_success(a: float, b: float) -> None:
+    result = divide(a, b)
     assert result.is_ok()
-    assert result.unwrap() == 5.0
+    assert result.unwrap() == a / b
 
 
 def test_divide_by_zero() -> None:
@@ -46,10 +47,11 @@ async def async_divide(a: float, b: float) -> float:
 
 
 @pytest.mark.asyncio
-async def test_async_divide_success() -> None:
-    result = await async_divide(10, 2)
+@pytest.mark.parametrize(("a", "b"), [(10, 2), (20, 10)])
+async def test_async_divide_success(a: float, b: float) -> None:
+    result = await async_divide(a, b)
     assert result.is_ok()
-    assert result.unwrap() == 5.0
+    assert result.unwrap() == a / b
 
 
 @pytest.mark.asyncio
