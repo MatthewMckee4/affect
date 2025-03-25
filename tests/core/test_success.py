@@ -1,5 +1,3 @@
-from typing import Any
-
 import pytest
 
 from affect import Failure, Result, Success
@@ -36,22 +34,25 @@ def test_success_err() -> None:
     assert success_result.err() is None
 
 
-def test_success_map() -> None:
-    success_result = Success(value=2)
+@pytest.mark.parametrize("value", [2, 3, 4, 5])
+def test_success_map(value: int) -> None:
+    success_result = Success(value=value)
     mapped_result = success_result.map(lambda x: x * 2)
-    assert mapped_result.ok() == 4
+    assert mapped_result.ok() == value * 2
 
 
-def test_success_map_or() -> None:
-    success_result = Success(value=2)
+@pytest.mark.parametrize("value", [2, 3, 4, 5])
+def test_success_map_or(value: int) -> None:
+    success_result = Success(value=value)
     result = success_result.map_or(0, lambda x: x * 2)
-    assert result == 4
+    assert result == value * 2
 
 
-def test_success_map_or_else() -> None:
-    success_result = Success(value=2)
+@pytest.mark.parametrize("value", [2, 3, 4, 5])
+def test_success_map_or_else(value: int) -> None:
+    success_result = Success(value=value)
     result = success_result.map_or_else(lambda _: 0, lambda x: x * 2)
-    assert result == 4
+    assert result == value * 2
 
 
 def test_success_map_err() -> None:
@@ -63,7 +64,7 @@ def test_success_map_err() -> None:
 def test_success_inspect() -> None:
     success_result = Success(value="Test Value")
 
-    def inspect_func(value: Any) -> None:
+    def inspect_func(value: str) -> None:
         assert value == "Test Value"
 
     inspected_result = success_result.inspect(inspect_func)

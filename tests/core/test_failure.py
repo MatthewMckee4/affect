@@ -1,3 +1,5 @@
+import sys
+
 import pytest
 
 from affect import Failure, Result, Success
@@ -60,12 +62,12 @@ def test_failure_map_err() -> None:
 
 def test_failure_inspect() -> None:
     failure_result = Failure(value="Test Error")
-    assert failure_result.inspect(lambda x: print(x)) is failure_result
+    assert failure_result.inspect(lambda x: sys.stderr.write(x)) is failure_result
 
 
 def test_failure_inspect_err() -> None:
     failure_result = Failure(value="Test Error")
-    assert failure_result.inspect_err(lambda x: print(x)) is failure_result
+    assert failure_result.inspect_err(lambda x: sys.stderr.write(x)) is failure_result
 
 
 def test_failure_hash() -> None:

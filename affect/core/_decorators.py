@@ -37,7 +37,7 @@ def as_result(
     exceptions of the specified exception type(s) are turned into ``Err(exc)``.
     """
     exceptions_ = cast(
-        tuple[type[ExceptionT], ...],
+        "tuple[type[ExceptionT], ...]",
         (exception, *exceptions) if exception else exceptions,
     )
 
@@ -55,7 +55,10 @@ def as_result(
             try:
                 return Success(f(*args, **kwargs))
             except exceptions__ as exc:
-                return cast(Result[T, ExceptionT] | Result[T, Exception], Failure(exc))
+                return cast(
+                    "Result[T, ExceptionT] | Result[T, Exception]",
+                    Failure(exc),
+                )
 
         return wrapper
 
@@ -96,7 +99,7 @@ def as_async_result(
     exceptions of the specified exception type(s) are turned into ``Err(exc)``.
     """
     exceptions_ = cast(
-        tuple[type[ExceptionT], ...],
+        "tuple[type[ExceptionT], ...]",
         (exception, *exceptions) if exception else exceptions,
     )
 
@@ -114,7 +117,10 @@ def as_async_result(
             try:
                 return Success(await f(*args, **kwargs))
             except exceptions__ as exc:
-                return cast(Result[T, ExceptionT] | Result[T, Exception], Failure(exc))
+                return cast(
+                    "Result[T, ExceptionT] | Result[T, Exception]",
+                    Failure(exc),
+                )
 
         return wrapper
 
