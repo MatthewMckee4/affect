@@ -1,3 +1,7 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools>=61", "uv", "build", "wheel"]
+
 [project]
 classifiers = [
   "Typing :: Typed",
