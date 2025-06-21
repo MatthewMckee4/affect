@@ -91,7 +91,7 @@ src = "README.md"
 src = "pyproject.toml"
 
 [[tool.tbump.file]]
-src = "affect/version.py"
+src = "src/affect/version.py"
 
 [tool.tbump.git]
 message_template = "Bump to v{new_version}"
