@@ -24,19 +24,19 @@ docs = [
     { name = "zensical" },
 ]
 test = [
-    { name = "karva" },
     { name = "pytest" },
+    { name = "pytest-asyncio" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "build", marker = "extra == 'dev'", specifier = ">=1.2.2.post1" },
-    { name = "karva", marker = "extra == 'test'" },
     { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.15.0" },
     { name = "pre-commit", marker = "extra == 'dev'", specifier = ">=4.1.0" },
     { name = "pydantic", specifier = ">=2.10.6" },
     { name = "pydantic-settings", specifier = ">=2.8.0" },
     { name = "pytest", marker = "extra == 'test'" },
+    { name = "pytest-asyncio", marker = "extra == 'test'" },
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.9.7" },
     { name = "tbump", marker = "extra == 'dev'", specifier = ">=6.11.0" },
     { name = "ty", marker = "extra == 'dev'" },
@@ -160,26 +160,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/72/34/14ca021ce8e5dfedc35312d08ba8bf51fdd999c576889fc2c24cb97f4f10/iniconfig-2.3.0.tar.gz", hash = "sha256:c76315c77db068650d49c5b56314774a7804df16fee4402c1f19d6d15d8c4730", size = 20503, upload-time = "2025-10-18T21:55:43.219Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/cb/b1/3846dd7f199d53cb17f49cba7e651e9ce294d8497c8c150530ed11865bb8/iniconfig-2.3.0-py3-none-any.whl", hash = "sha256:f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12", size = 7484, upload-time = "2025-10-18T21:55:41.639Z" },
-]
-
-[[package]]
-name = "karva"
-version = "0.1.10"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/3a/e4/9dd1138ca40ecda9ce74ed581a41d3a17d78918d53386b23b3d996d8b28e/karva-0.1.10.tar.gz", hash = "sha256:e9db11cd60b1484e439a3d7a51bf79dcc60cd679a5f8d997356298be222697e1", size = 88612, upload-time = "2025-11-28T01:27:57.169Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/96/86/93ad8177ac090f5a033297451426f1bbb2582aedabf1b63277ffebd082e6/karva-0.1.10-cp310-abi3-macosx_10_12_x86_64.whl", hash = "sha256:704637d451d103721546ccced2d34ef829c8a3b84c1033fb7cb219120babafba", size = 2696911, upload-time = "2025-11-28T01:27:49.543Z" },
-    { url = "https://files.pythonhosted.org/packages/83/57/2d60a2320d92ef492debc8e2fb0c5a26dd3c8d9b938693ae431f05b40f82/karva-0.1.10-cp310-abi3-macosx_11_0_arm64.whl", hash = "sha256:6f4b3f9d1703a8b6df7e1a99f84c4f5f0345042b87ff6d2fe0ac5b0466e4105a", size = 2638077, upload-time = "2025-11-28T01:27:48.177Z" },
-    { url = "https://files.pythonhosted.org/packages/96/78/ff43b38d0fda41177789b146be0787aa7352d34bd0295e09ed37a0bb7174/karva-0.1.10-cp310-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:aa227bdc3e6b961c4863c137f054259a52182460ea6bd28740544e986274ba42", size = 2896538, upload-time = "2025-11-28T01:27:43.095Z" },
-    { url = "https://files.pythonhosted.org/packages/93/77/136ff83d78796e6a87791b8cf8a4d9ee92afb1b75bd911f9471aef1e5b83/karva-0.1.10-cp310-abi3-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:8fe534903a654dd540b6e06feca0359255eab581901da2e01011fc350a699c70", size = 2814795, upload-time = "2025-11-28T01:27:44.345Z" },
-    { url = "https://files.pythonhosted.org/packages/84/50/c36ca4ed86934f09b8a92add2e0137fa268504fdf05847c03d424a3a23e8/karva-0.1.10-cp310-abi3-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:9be6c1dc6c77f54a632cc6d209a64a2307414d60d6a6198c0a664e85fd48d003", size = 3105344, upload-time = "2025-11-28T01:27:45.492Z" },
-    { url = "https://files.pythonhosted.org/packages/b2/5b/cd6020d352aa3055ea0293786574752c134892141809ba6cde3400d2850c/karva-0.1.10-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:81321b5e6c751e616fcca241707b85123466a5718557ddda0cb705de6bea97d8", size = 2899715, upload-time = "2025-11-28T01:27:46.792Z" },
-    { url = "https://files.pythonhosted.org/packages/2c/c7/7b51e8ad46c767295d742bda3de95ff53bdfd207b26374e4cad32b90fb84/karva-0.1.10-cp310-abi3-musllinux_1_2_aarch64.whl", hash = "sha256:b95b616b92e4c060ba48f2b57e4863f5e5c17bcbdbd7f3b3789fe8d478696b17", size = 3080562, upload-time = "2025-11-28T01:27:51.042Z" },
-    { url = "https://files.pythonhosted.org/packages/7d/13/88753f1a5f2c611e51ee7018c7572d41a492c6365e95b9f5cd4129da6675/karva-0.1.10-cp310-abi3-musllinux_1_2_armv7l.whl", hash = "sha256:8cf700de75324684282f46c8a2110208fb3a7e44b003d9c1cb784291a6b7fd8c", size = 3081446, upload-time = "2025-11-28T01:27:52.284Z" },
-    { url = "https://files.pythonhosted.org/packages/ee/17/0eb534938db31ed4db96ca58118c1ad5c0a92ef86b55136b33b8f41a0c4b/karva-0.1.10-cp310-abi3-musllinux_1_2_i686.whl", hash = "sha256:eae8dd88efcbe05cc12c94089fe156e9100a29f9868d693767a5e82f436ce61a", size = 3168490, upload-time = "2025-11-28T01:27:53.918Z" },
-    { url = "https://files.pythonhosted.org/packages/9e/ee/f9454bce1c095784aa2b5b58e7b4ce2caae54e6feef1a96b8b68563af570/karva-0.1.10-cp310-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:3dbfaec4ff064fb932af93cb325d76fa67e13b6837264f6ae73c2fdad8303cd0", size = 3144531, upload-time = "2025-11-28T01:27:55.415Z" },
-    { url = "https://files.pythonhosted.org/packages/eb/f6/d98365377d84246e220c9966b58c3b88c67beb73652ecd1feca91f30597f/karva-0.1.10-cp310-abi3-win32.whl", hash = "sha256:e51baa185dc2eef0c5f99b7ad0d93d8b2f3ea7d20f87285e86107406ce0ef5ee", size = 2320521, upload-time = "2025-11-28T01:27:59.491Z" },
-    { url = "https://files.pythonhosted.org/packages/7a/f0/53d9fa7435540225c7ff8aa7a524db524313469cfc619b393829d729a6ed/karva-0.1.10-cp310-abi3-win_amd64.whl", hash = "sha256:fcec03872235091bafe396d58e7340f52c2fd3bfd4881bb4e04161030727f0d6", size = 2532021, upload-time = "2025-11-28T01:27:58.308Z" },
 ]
 
 [[package]]
@@ -534,6 +514,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/07/56/f013048ac4bc4c1d9be45afd4ab209ea62822fb1598f40687e6bf45dcea4/pytest-9.0.1.tar.gz", hash = "sha256:3e9c069ea73583e255c3b21cf46b8d3c56f6e3a1a8f6da94ccb0fcf57b9d73c8", size = 1564125, upload-time = "2025-11-12T13:05:09.333Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/0b/8b/6300fb80f858cda1c51ffa17075df5d846757081d11ab4aa35cef9e6258b/pytest-9.0.1-py3-none-any.whl", hash = "sha256:67be0030d194df2dfa7b556f2e56fb3c3315bd5c8822c6951162b92b32ce7dad", size = 373668, upload-time = "2025-11-12T13:05:07.379Z" },
+]
+
+[[package]]
+name = "pytest-asyncio"
+version = "1.3.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pytest" },
+    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/90/2c/8af215c0f776415f3590cac4f9086ccefd6fd463befeae41cd4d3f193e5a/pytest_asyncio-1.3.0.tar.gz", hash = "sha256:d7f52f36d231b80ee124cd216ffb19369aa168fc10095013c6b014a34d3ee9e5", size = 50087, upload-time = "2025-11-10T16:07:47.256Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e5/35/f8b19922b6a25bc0880171a2f1a003eaeb93657475193ab516fd87cac9da/pytest_asyncio-1.3.0-py3-none-any.whl", hash = "sha256:611e26147c7f77640e6d0a92a38ed17c3e9848063698d5c93d5aa7aa11cebff5", size = 15075, upload-time = "2025-11-10T16:07:45.537Z" },
 ]
 
 [[package]]

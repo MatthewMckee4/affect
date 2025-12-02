@@ -1,4 +1,4 @@
-import karva
+import pytest
 
 from affect import as_async_result, as_result
 
@@ -8,7 +8,7 @@ def divide(a: float, b: float) -> float:
     return a / b
 
 
-@karva.tags.parametrize(("a", "b"), [(10, 2), (20, 10)])
+@pytest.mark.parametrize(("a", "b"), [(10, 2), (20, 10)])
 def test_divide_success(a: float, b: float) -> None:
     result = divide(a, b)
     assert result.is_ok()
@@ -46,19 +46,22 @@ async def async_divide(a: float, b: float) -> float:
     return a / b
 
 
-@karva.tags.parametrize(("a", "b"), [(10, 2), (20, 10)])
+@pytest.mark.parametrize(("a", "b"), [(10, 2), (20, 10)])
+@pytest.mark.asyncio
 async def test_async_divide_success(a: float, b: float) -> None:
     result = await async_divide(a, b)
     assert result.is_ok()
     assert result.unwrap() == a / b
 
 
+@pytest.mark.asyncio
 async def test_async_divide_by_zero() -> None:
     result = await async_divide(10, 0)
     assert result.is_err()
     assert isinstance(result.unwrap_err(), Exception)
 
 
+@pytest.mark.asyncio
 async def test_async_divide_with_non_number() -> None:
     @as_async_result(TypeError)
     async def async_divide(a: float, b: float) -> float:
@@ -69,6 +72,7 @@ async def test_async_divide_with_non_number() -> None:
     assert isinstance(result.unwrap_err(), TypeError)
 
 
+@pytest.mark.asyncio
 async def test_async_divide_with_multiple_exceptions() -> None:
     @as_async_result(ZeroDivisionError, TypeError)
     async def safe_async_divide(a: float, b: float) -> float:

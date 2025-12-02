@@ -1,4 +1,3 @@
-import karva
 import pytest
 
 from affect import Failure, Result, Success
@@ -35,21 +34,21 @@ def test_success_err() -> None:
     assert success_result.err() is None
 
 
-@karva.tags.parametrize("value", [2, 3, 4, 5])
+@pytest.mark.parametrize("value", [2, 3, 4, 5])
 def test_success_map(value: int) -> None:
     success_result = Success(value=value)
     mapped_result = success_result.map(lambda x: x * 2)
     assert mapped_result.ok() == value * 2
 
 
-@karva.tags.parametrize("value", [2, 3, 4, 5])
+@pytest.mark.parametrize("value", [2, 3, 4, 5])
 def test_success_map_or(value: int) -> None:
     success_result = Success(value=value)
     result = success_result.map_or(0, lambda x: x * 2)
     assert result == value * 2
 
 
-@karva.tags.parametrize("value", [2, 3, 4, 5])
+@pytest.mark.parametrize("value", [2, 3, 4, 5])
 def test_success_map_or_else(value: int) -> None:
     success_result = Success(value=value)
     result = success_result.map_or_else(lambda _: 0, lambda x: x * 2)
@@ -129,7 +128,7 @@ def test_success_and_failure() -> None:
     assert success_result.and_(failure_result) == failure_result
 
 
-@karva.tags.parametrize(
+@pytest.mark.parametrize(
     ("value", "func", "expected"),
     [
         (10, lambda x: x + 5, 15),
@@ -143,7 +142,7 @@ def test_success_map_various_types(value, func, expected) -> None:
     assert mapped_result.ok() == expected
 
 
-@karva.tags.parametrize(
+@pytest.mark.parametrize(
     ("value", "default", "expected"),
     [(10, 0, 20), (5, 999, 10), (1, 100, 2)],
 )
@@ -166,7 +165,7 @@ def test_success_map_with_none() -> None:
     assert mapped_result.ok() == "mapped"
 
 
-@karva.tags.parametrize("value", ["", 0, False, [], {}])
+@pytest.mark.parametrize("value", ["", 0, False, [], {}])
 def test_success_with_falsy_values(value) -> None:
     success_result = Success(value=value)
     assert success_result.is_ok()
@@ -186,7 +185,7 @@ def test_success_inspect_multiple_calls() -> None:
     assert result.ok() == 10
 
 
-@karva.tags.parametrize(
+@pytest.mark.parametrize(
     ("start_value", "operations", "expected"),
     [
         (2, [lambda x: x * 2, lambda x: x + 1, lambda x: x * 3], 15),
