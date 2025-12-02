@@ -7,7 +7,8 @@ classifiers = [
   "Typing :: Typed",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
-  "Programming Language :: Python :: 3.13"
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14"
 ]
 dependencies = ["pydantic>=2.10.6", "pydantic-settings>=2.8.0"]
 description = "Build robust python applications"
@@ -23,20 +24,15 @@ dev = [
   "mypy>=1.15.0",
   "pre-commit>=4.1.0",
   "ruff>=0.9.7",
-  "tbump>=6.11.0"
+  "tbump>=6.11.0",
+  "ty"
 ]
 docs = [
-  "mkdocs",
-  "mkdocs-jupyter>=0.24",
-  "mkdocstrings[python]",
-  "mkdocs-material"
+  "zensical"
 ]
 test = [
-  "pytest-cov>=6.0.0",
-  "pytest-randomly>=3.16.0",
-  "pytest-xdist>=3.6.0",
-  "pytest>=8.3.5",
-  "pytest-asyncio>=0.25.3"
+  "karva",
+  "pytest"
 ]
 
 [project.urls]
@@ -65,12 +61,10 @@ branch = true
 python_version = "3.11"
 strict = true
 
-[tool.pytest.ini_options]
-asyncio_default_fixture_loop_scope = "function"
-
 [tool.ruff]
 fix = true
 target-version = "py311"
+exclude = ["tests"]
 
 [tool.ruff.lint]
 per-file-ignores = {"tests/*.py" = ["D", "S101"]}

@@ -3,7 +3,16 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, Any, Generic, Literal, NoReturn, Self, TypeAlias
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Generic,
+    Literal,
+    NoReturn,
+    Self,
+    TypeAlias,
+    final,
+)
 
 from pydantic.dataclasses import dataclass
 from typing_extensions import TypeIs
@@ -16,7 +25,7 @@ if TYPE_CHECKING:
 
 
 @dataclass(frozen=True)
-class _ResultBase(Generic[T], ABC):
+class _ResultBase(ABC, Generic[T]):
     """Base class for results."""
 
     value: T
@@ -48,6 +57,7 @@ class _ResultBase(Generic[T], ABC):
         return hash((self.is_ok(), self.value))
 
 
+@final
 class Success(_ResultBase[SuccessT]):
     """A successful result."""
 
@@ -125,7 +135,32 @@ class Success(_ResultBase[SuccessT]):
         """Returns res if the result is Ok, otherwise returns the Err value of self."""
         return _res
 
+    def and_then(self, func: Callable[[SuccessT], Result[U, O]], /) -> Result[U, O]:
+        """Calls func if the result is Ok, otherwise returns the Err value of self."""
+        return func(self.value)
 
+    def or_(self, _res: Result[U, O], /) -> Success[SuccessT]:
+        """Returns res if the result is Err, otherwise returns the Ok value of self."""
+        return self
+
+    def or_else(
+        self,
+        _func: Callable[[Any], Result[U, O]],
+        /,
+    ) -> Success[SuccessT]:
+        """Calls func if the result is Err, otherwise returns the Ok value of self."""
+        return self
+
+    def unwrap_or(self, _default: U, /) -> SuccessT:
+        """Returns the contained Ok value or a provided default."""
+        return self.value
+
+    def unwrap_or_else(self, _func: Callable[[Any], U], /) -> SuccessT:
+        """Returns the contained Ok value or computes it from a closure."""
+        return self.value
+
+
+@final
 class Failure(_ResultBase[FailureT]):
     """A failed result."""
 
@@ -209,6 +244,26 @@ class Failure(_ResultBase[FailureT]):
     def and_(self, _res: Result[U, O], /) -> Self:
         """Returns res if the result is Ok, otherwise returns the Err value of self."""
         return self
+
+    def and_then(self, _func: Callable[[Any], Result[U, O]], /) -> Self:
+        """Calls func if the result is Ok, otherwise returns the Err value of self."""
+        return self
+
+    def or_(self, res: Result[U, O], /) -> Result[U, O]:
+        """Returns res if the result is Err, otherwise returns the Ok value of self."""
+        return res
+
+    def or_else(self, func: Callable[[FailureT], Result[U, O]], /) -> Result[U, O]:
+        """Calls func if the result is Err, otherwise returns the Ok value of self."""
+        return func(self.value)
+
+    def unwrap_or(self, default: U, /) -> U:
+        """Returns the contained Ok value or a provided default."""
+        return default
+
+    def unwrap_or_else(self, func: Callable[[FailureT], U], /) -> U:
+        """Returns the contained Ok value or computes it from a closure."""
+        return func(self.value)
 
 
 Result: TypeAlias = Success[SuccessT] | Failure[FailureT]

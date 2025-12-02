@@ -4,16 +4,16 @@ labels: [enhancement]
 type: feature
 
 body:
-- type: textarea
-  id: description
-  attributes:
-    label: Description
-    description: |
-      Please give as much detail as possible about the feature you would like to suggest.
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: |
+        Please give as much detail as possible about the feature you would like to suggest.
 
-      You might like to add:
-      * A demo of how code might look when using the feature
-      * Your use case(s) for the feature
-      * Why the feature should be added to affect
-  validations:
-    required: true
+        You might like to add:
+        * A demo of how code might look when using the feature
+        * Your use case(s) for the feature
+        * Why the feature should be added to affect
+    validations:
+      required: true

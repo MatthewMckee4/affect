@@ -16,10 +16,10 @@ build:
 	uv run python -m build
 
 docs:
-	uv run mkdocs build
+	uv run zensical build
 
 docs-serve:
-	uv run mkdocs serve
+	uv run zensical serve
 
 clean:
 	rm -rf site
