@@ -31,8 +31,8 @@ docs = [
   "zensical"
 ]
 test = [
-  "karva",
-  "pytest"
+  "pytest",
+  "pytest-asyncio"
 ]
 
 [project.urls]

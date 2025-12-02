@@ -1,4 +1,4 @@
-import karva
+import pytest
 
 from affect import Failure, Success
 
@@ -33,14 +33,14 @@ def test_success_not_equal_to_failure() -> None:
     assert success != failure
 
 
-@karva.tags.parametrize("value", [42, "test", None, [1, 2, 3]])
+@pytest.mark.parametrize("value", [42, "test", None, [1, 2, 3]])
 def test_success_equality_parametrized(value) -> None:
     success1 = Success(value=value)
     success2 = Success(value=value)
     assert success1 == success2
 
 
-@karva.tags.parametrize("value", [404, "error", None])
+@pytest.mark.parametrize("value", [404, "error", None])
 def test_failure_equality_parametrized(value) -> None:
     failure1 = Failure(value=value)
     failure2 = Failure(value=value)
@@ -65,7 +65,7 @@ def test_success_failure_different_hash() -> None:
     assert hash(success) != hash(failure)
 
 
-@karva.tags.parametrize(("value1", "value2"), [(1, 1), ("a", "a"), (None, None)])
+@pytest.mark.parametrize(("value1", "value2"), [(1, 1), ("a", "a"), (None, None)])
 def test_success_hash_equality_parametrized(value1, value2) -> None:
     success1 = Success(value=value1)
     success2 = Success(value=value2)

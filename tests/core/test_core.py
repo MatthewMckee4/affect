@@ -1,4 +1,4 @@
-import karva
+import pytest
 
 from affect import Failure, Success, is_err, is_failure, is_ok, is_success
 
@@ -43,13 +43,13 @@ def test_is_failure_failure() -> None:
     assert is_failure(failure_result) is True
 
 
-@karva.tags.parametrize("value", [42, "test", [1, 2, 3], {"key": "value"}, None])
+@pytest.mark.parametrize("value", [42, "test", [1, 2, 3], {"key": "value"}, None])
 def test_is_ok_with_various_types(value):
     success_result = Success(value=value)
     assert is_ok(success_result) is True
 
 
-@karva.tags.parametrize("value", [42, "error", Exception("test"), None])
+@pytest.mark.parametrize("value", [42, "error", Exception("test"), None])
 def test_is_err_with_various_types(value):
     failure_result = Failure(value=value)
     assert is_err(failure_result) is True
@@ -68,7 +68,7 @@ def test_failure_unwrap_or() -> None:
     assert result == 0
 
 
-@karva.tags.parametrize(
+@pytest.mark.parametrize(
     ("value", "default", "expected"),
     [(42, 0, 42), ("test", "default", "test")],
 )
@@ -78,7 +78,7 @@ def test_success_unwrap_or_parametrized(value, default, expected) -> None:
     assert result == expected
 
 
-@karva.tags.parametrize(
+@pytest.mark.parametrize(
     ("error", "default", "expected"),
     [("error", 0, 0), (404, "default", "default")],
 )
@@ -101,7 +101,7 @@ def test_failure_unwrap_or_else() -> None:
     assert result == "handled: error"
 
 
-@karva.tags.parametrize(
+@pytest.mark.parametrize(
     ("value", "expected"),
     [(42, 42), ("test", "test"), ([1, 2, 3], [1, 2, 3])],
 )
@@ -111,7 +111,7 @@ def test_success_unwrap_or_else_parametrized(value, expected) -> None:
     assert result == expected
 
 
-@karva.tags.parametrize(
+@pytest.mark.parametrize(
     ("error", "func", "expected"),
     [
         ("error", lambda e: f"handled: {e}", "handled: error"),
@@ -150,7 +150,7 @@ def test_failure_or_with_failure() -> None:
     assert result.unwrap_err() == "error2"
 
 
-@karva.tags.parametrize(
+@pytest.mark.parametrize(
     ("first_value", "second_value"),
     [(42, 100), ("test", "other"), ([1, 2], [3, 4])],
 )
@@ -183,7 +183,7 @@ def test_failure_or_else_to_failure() -> None:
     assert result.unwrap_err() == "handled: error"
 
 
-@karva.tags.parametrize(
+@pytest.mark.parametrize(
     ("error", "recovery_func"),
     [
         ("error", lambda e: Success(value=0)),
@@ -221,7 +221,7 @@ def test_failure_and_then() -> None:
     assert result.unwrap_err() == "error"
 
 
-@karva.tags.parametrize(
+@pytest.mark.parametrize(
     ("value", "func", "expected"),
     [
         (2, lambda x: Success(value=x * 2), 4),
@@ -299,7 +299,7 @@ def test_combining_and_then_with_or_else() -> None:
     assert result_with_error.unwrap() == 0
 
 
-@karva.tags.parametrize(
+@pytest.mark.parametrize(
     ("operations", "expected_result"),
     [
         ([lambda x: Success(value=x * 2), lambda x: Success(value=x + 1)], 5),

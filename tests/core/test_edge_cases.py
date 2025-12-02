@@ -1,4 +1,3 @@
-import karva
 import pytest
 
 from affect import Failure, Success
@@ -53,14 +52,14 @@ def test_failure_with_false() -> None:
     assert failure.unwrap_err() is False
 
 
-@karva.tags.parametrize("value", [[], {}, set(), tuple()])
+@pytest.mark.parametrize("value", [[], {}, set(), tuple()])
 def test_success_with_empty_collections(value) -> None:
     success = Success(value=value)
     assert success.is_ok()
     assert success.unwrap() == value
 
 
-@karva.tags.parametrize("value", [[], {}, set(), tuple()])
+@pytest.mark.parametrize("value", [[], {}, set(), tuple()])
 def test_failure_with_empty_collections(value) -> None:
     failure = Failure(value=value)
     assert failure.is_err()
@@ -153,7 +152,7 @@ def test_failure_map_or_else_with_used_default() -> None:
     assert len(map_called) == 0
 
 
-@karva.tags.parametrize(
+@pytest.mark.parametrize(
     ("value", "predicate", "expected"),
     [
         (5, lambda x: x > 0, True),
@@ -167,7 +166,7 @@ def test_success_is_ok_and_parametrized(value, predicate, expected: bool) -> Non
     assert success.is_ok_and(predicate) == expected
 
 
-@karva.tags.parametrize(
+@pytest.mark.parametrize(
     ("value", "predicate", "expected"),
     [
         (404, lambda x: x >= 400, True),
@@ -265,7 +264,7 @@ def test_failure_expect_err_returns_value() -> None:
     assert result == "expected_error"
 
 
-@karva.tags.parametrize(
+@pytest.mark.parametrize(
     "value",
     [
         lambda x: x + 1,

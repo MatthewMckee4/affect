@@ -1,10 +1,9 @@
-import karva
 import pytest
 
 from affect import as_async_result, as_result
 
 
-@karva.tags.parametrize(("a", "b", "expected"), [(10, 2, 5), (20, 4, 5), (100, 10, 10)])
+@pytest.mark.parametrize(("a", "b", "expected"), [(10, 2, 5), (20, 4, 5), (100, 10, 10)])
 def test_as_result_success_parametrized(a: int, b: int, expected: int) -> None:
     @as_result()
     def divide(x: int, y: int) -> int:
@@ -140,10 +139,11 @@ def test_as_result_with_args_and_kwargs() -> None:
     assert result3.is_err()
 
 
-@karva.tags.parametrize(
+@pytest.mark.parametrize(
     ("a", "b", "expected"),
     [(10, 2, 5.0), (20, 4, 5.0), (15, 3, 5.0)],
 )
+@pytest.mark.asyncio
 async def test_as_async_result_success_parametrized(
     a: float,
     b: float,
@@ -158,6 +158,7 @@ async def test_as_async_result_success_parametrized(
     assert result.unwrap() == expected
 
 
+@pytest.mark.asyncio
 async def test_as_async_result_no_exception_specified() -> None:
     @as_async_result()
     async def async_may_fail(value: int) -> int:
@@ -174,6 +175,7 @@ async def test_as_async_result_no_exception_specified() -> None:
     assert isinstance(failure_result.unwrap_err(), ValueError)
 
 
+@pytest.mark.asyncio
 async def test_as_async_result_specific_exception() -> None:
     @as_async_result(ValueError)
     async def async_parse_int(value: str) -> int:
@@ -190,6 +192,7 @@ async def test_as_async_result_specific_exception() -> None:
     assert isinstance(failure_result.unwrap_err(), ValueError)
 
 
+@pytest.mark.asyncio
 async def test_as_async_result_multiple_exceptions() -> None:
     @as_async_result(ValueError, TypeError, KeyError)
     async def async_risky_operation(data: dict, key: str) -> int:
@@ -209,6 +212,7 @@ async def test_as_async_result_multiple_exceptions() -> None:
     assert isinstance(key_error_result.unwrap_err(), KeyError)
 
 
+@pytest.mark.asyncio
 async def test_as_async_result_preserves_function_name() -> None:
     @as_async_result()
     async def my_async_function() -> int:
@@ -217,6 +221,7 @@ async def test_as_async_result_preserves_function_name() -> None:
     assert my_async_function.__name__ == "my_async_function"
 
 
+@pytest.mark.asyncio
 async def test_as_async_result_preserves_docstring() -> None:
     @as_async_result()
     async def documented_async_function() -> int:
@@ -226,6 +231,7 @@ async def test_as_async_result_preserves_docstring() -> None:
     assert documented_async_function.__doc__ == "This is an async docstring."
 
 
+@pytest.mark.asyncio
 async def test_as_async_result_with_kwargs() -> None:
     @as_async_result()
     async def async_greet(name: str, greeting: str = "Hello") -> str:
@@ -255,6 +261,7 @@ def test_as_result_with_none_return() -> None:
     assert result.unwrap() is None
 
 
+@pytest.mark.asyncio
 async def test_as_async_result_with_none_return() -> None:
     @as_async_result()
     async def async_returns_none() -> None:
@@ -278,6 +285,7 @@ def test_as_result_with_complex_return_type() -> None:
     assert len(data["roles"]) == 2
 
 
+@pytest.mark.asyncio
 async def test_as_async_result_with_complex_return_type() -> None:
     @as_async_result()
     async def async_get_user_data() -> dict[str, any]:
@@ -291,7 +299,7 @@ async def test_as_async_result_with_complex_return_type() -> None:
     assert len(data["roles"]) == 2
 
 
-@karva.tags.parametrize("exception_type", [ValueError, TypeError, RuntimeError])
+@pytest.mark.parametrize("exception_type", [ValueError, TypeError, RuntimeError])
 def test_as_result_parametrized_exception_types(exception_type) -> None:
     @as_result(exception_type)
     def may_raise(should_fail: bool):
