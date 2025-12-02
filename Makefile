@@ -3,7 +3,7 @@ dev:
 	uv pip install -e .
 
 test:
-	uv run pytest src
+	uv run pytest tests
 
 pre-commit:
 	uv run pre-commit run --all-files
