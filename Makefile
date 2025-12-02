@@ -3,7 +3,7 @@ dev:
 	uv pip install -e .
 
 test:
-	uv run karva
+	uv run karva test src
 
 pre-commit:
 	uv run pre-commit run --all-files
