@@ -29,7 +29,7 @@ def as_result(
     *exceptions: type[ExceptionT],
 ) -> Callable[
     [Callable[P, T]],
-    Callable[P, Result[T, ExceptionT] | Result[T, Exception]],
+    Callable[P, Result[T, ExceptionT | Exception]],
 ]:
     """Make a decorator to turn a function into one that returns a ``Result``.
 
@@ -43,20 +43,20 @@ def as_result(
 
     def decorator(
         f: Callable[P, T],
-    ) -> Callable[P, Result[T, ExceptionT] | Result[T, Exception]]:
+    ) -> Callable[P, Result[T, ExceptionT | Exception]]:
         """Decorator to turn a function into one that returns a ``Result``."""
 
         @functools.wraps(f)
         def wrapper(
             *args: P.args,
             **kwargs: P.kwargs,
-        ) -> Result[T, ExceptionT] | Result[T, Exception]:
+        ) -> Result[T, ExceptionT | Exception]:
             exceptions__ = exceptions_ or Exception
             try:
                 return Success(f(*args, **kwargs))
             except exceptions__ as exc:
                 return cast(
-                    "Result[T, ExceptionT] | Result[T, Exception]",
+                    "Result[T, ExceptionT | Exception]",
                     Failure(exc),
                 )
 
@@ -91,7 +91,7 @@ def as_async_result(
     *exceptions: type[ExceptionT],
 ) -> Callable[
     [Callable[P, Awaitable[T]]],
-    Callable[P, Awaitable[Result[T, ExceptionT] | Result[T, Exception]]],
+    Callable[P, Awaitable[Result[T, ExceptionT | Exception]]],
 ]:
     """Make a decorator to turn a function into one that returns a ``Result``.
 
@@ -105,20 +105,20 @@ def as_async_result(
 
     def decorator(
         f: Callable[P, Awaitable[T]],
-    ) -> Callable[P, Awaitable[Result[T, ExceptionT] | Result[T, Exception]]]:
+    ) -> Callable[P, Awaitable[Result[T, ExceptionT | Exception]]]:
         """Decorator to turn a function into one that returns a ``Result``."""
 
         @functools.wraps(f)
         async def wrapper(
             *args: P.args,
             **kwargs: P.kwargs,
-        ) -> Result[T, ExceptionT] | Result[T, Exception]:
+        ) -> Result[T, ExceptionT | Exception]:
             exceptions__ = exceptions_ or Exception
             try:
                 return Success(await f(*args, **kwargs))
             except exceptions__ as exc:
                 return cast(
-                    "Result[T, ExceptionT] | Result[T, Exception]",
+                    "Result[T, ExceptionT | Exception]",
                     Failure(exc),
                 )
 

@@ -4,5 +4,5 @@
 
 ## Inspirations
 
-- https://github.com/rustedpy/result
-- https://github.com/Effect-TS/effect
+- <https://github.com/rustedpy/result>
+- <https://github.com/Effect-TS/effect>

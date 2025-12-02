@@ -2,7 +2,7 @@ site_name: Affect
 repo_url: https://github.com/MatthewMckee4/affect
 
 nav:
-- Home: index.md
+  - Home: index.md
 
 theme:
   name: material
@@ -12,13 +12,13 @@ theme:
     primary: cyan
 
   features:
-  - navigation.instant
-  - navigation.tabs
-  - navigation.footer
-  - navigation.indexes
-  - content.tabs.link
+    - navigation.instant
+    - navigation.tabs
+    - navigation.footer
+    - navigation.indexes
+    - content.tabs.link
   icon:
     repo: fontawesome/brands/github
 
 plugins:
-- search
+  - search
